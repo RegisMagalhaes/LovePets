@@ -1,3 +1,0 @@
-Construa o Modelo Entidade Relacionamento que represente pessoas e seus dados, observando que:
-
-- uma pessoa pode ter vários telefones e vários emails, porém, pode possuir somente uma CNH.
