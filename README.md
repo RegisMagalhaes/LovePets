@@ -6,7 +6,7 @@ Repositório que reúne os conteúdos desenvolvidos com as turmas do segundo ter
 * SQL Server Management Studio
 * Modelagens - Conceitual, Lógico e Físico
 * SQL - DDL, DML e DQL
-* Stored Procedures, Views, Triggers, Functions, Index
+* Stored Procedures, Views, Triggers, Functions, Funções Nativa, Normalização e Index
 
 ## Sprint 2 - Back-End
 * C#
@@ -29,7 +29,7 @@ Repositório que reúne os conteúdos desenvolvidos com as turmas do segundo ter
 ## Sprint 4 - Front-End
 * JavaScript
 * ReactJs - Components, Props, State
-* Consumo de API - Requests (Fetch, Axios)
+* Consumo de API - Requests (Fetch)
 
 ## Sprint 5 - Mobile
 * React Native
