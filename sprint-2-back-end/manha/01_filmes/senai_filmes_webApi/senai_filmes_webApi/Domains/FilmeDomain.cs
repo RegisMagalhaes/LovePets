@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace senai_filmes_webApi.Domains
 {
     /// <summary>
-    /// Classe que representa a entidade Filmes
+    /// Classe que representa a entidade (tabela) Filmes
     /// </summary>
     public class FilmeDomain
     {
