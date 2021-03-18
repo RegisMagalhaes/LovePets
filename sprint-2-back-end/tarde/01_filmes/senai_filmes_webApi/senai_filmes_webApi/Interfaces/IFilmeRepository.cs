@@ -12,7 +12,6 @@ namespace senai_filmes_webApi.Interfaces
     public interface IFilmeRepository
     {
         // TipoRetorno NomeMetodo(TipoParametro NomeParametro);
-        // void Cadastrar();
 
         /// <summary>
         /// Retorna todos os filmes
