@@ -48,12 +48,26 @@ namespace senai_filmes_webApi.Repositories
             using (SqlConnection con = new SqlConnection(stringConexao))
             {
                 // Declara a query que será executada
-                                   // INSERT INTO Generos(Nome) VALUES ('Ficção científica');
-                string queryInsert = "INSERT INTO Generos(Nome) VALUES ('" + novoGenero.nome + "')";
+                                      // INSERT INTO Generos(Nome) VALUES ('Ficção científica');
+                                      // INSERT INTO Generos(Nome) VALUES ('Joana D'Arc');
+                                      // INSERT INTO Generos(Nome) VALUES ('')DROP TABLE Filmes--
+                // string queryInsert = "INSERT INTO Generos(Nome) VALUES ('" + novoGenero.nome + "')";
+                // Não usar dessa forma, pois pode causar o efeito Joana D'Arc
+                // Além de permitir SQL Injection
+                // Por exemplo
+                // "nome" : "Perdeu mané')DROP TABLE Filmes--"
+                // Ao tentar cadastrar o comando acima, irá deletar a tabela Filmes do banco de dados
+                // https://www.devmedia.com.br/sql-injection/6102
+
+                // Declara a query que será executada
+                string queryInsert = "INSERT INTO Generos(Nome) VALUES (@Nome)";
 
                 // Declara o SqlCommand cmd passando a query que será executada e a conexão como parâmetros
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
+                    // Passa o valor para o parâmetro @Nome
+                    cmd.Parameters.AddWithValue("@Nome", novoGenero.nome);
+
                     // Abre a conexão com o banco de dados
                     con.Open();
 
@@ -63,9 +77,31 @@ namespace senai_filmes_webApi.Repositories
             }
         }
 
+        /// <summary>
+        /// Deleta um gênero através do seu id
+        /// </summary>
+        /// <param name="id">id do gênero que será deletado</param>
         public void Deletar(int id)
         {
-            throw new NotImplementedException();
+            // Declara a SqlConnection con passando a string de conexão como parâmetro
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                // Declara a query a ser executada passando o parâmetro @ID
+                string queryDelete = "DELETE FROM Generos WHERE idGenero = @ID";
+
+                // Declara o SqlCommand cmd passando a query que será executada e a conexão como parâmetros
+                using (SqlCommand cmd = new SqlCommand(queryDelete, con))
+                {
+                    // Define o valor do id recebido no método como o valor do parâmetro @ID
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    // Abre a conexão com o banco de dados
+                    con.Open();
+
+                    // Executa o comando
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         /// <summary>
