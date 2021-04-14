@@ -24,3 +24,8 @@ WHERE idGenero = 2;
 
 DELETE FROM Generos
 WHERE idGenero = 3;
+
+INSERT INTO Usuarios(email, senha, permissao)
+VALUES				('saulo@email.com', '123', 'comum')
+				   ,('adm@adm.com', '123', 'administrador');
+GO

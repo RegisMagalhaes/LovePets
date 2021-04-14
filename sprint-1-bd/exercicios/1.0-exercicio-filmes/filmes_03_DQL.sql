@@ -27,3 +27,10 @@ ON Filmes.idGenero = Generos.idGenero;
 SELECT Filmes.idFilme, Filmes.Titulo AS Filme, Generos.Nome AS Genero FROM Filmes -- Tabela1
 FULL OUTER JOIN Generos -- Tabela2
 ON Filmes.idGenero = Generos.idGenero;
+
+-- * = TUDO (ALL)
+SELECT * FROM Usuarios;
+
+-- Busca um usuário através do e-mail e da senha
+SELECT idUsuario, email, senha, permissao FROM Usuarios
+WHERE email = 'saulo@email.com' AND senha = '123';
