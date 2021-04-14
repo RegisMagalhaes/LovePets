@@ -8,3 +8,5 @@ VALUES						('Catarina', 'Strada')
 
 -- Atualiza o valor da coluna DataNascimento
 UPDATE Funcionarios SET DataNascimento = '1993-03-17';
+
+SELECT * FROM Funcionarios;

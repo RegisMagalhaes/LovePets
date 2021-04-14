@@ -16,7 +16,7 @@ namespace senai_peoples_webApi.Repositories
         /// <summary>
         /// String de conexão com o banco de dados que recebe os parâmetros
         /// </summary>
-        private string stringConexao = "Data Source=DESKTOP-892K3RL\\SQLEXPRESS; initial catalog=Peoples; user Id=sa; pwd=senai@132";
+        private string stringConexao = "Data Source=DESKTOP-SP7RV1S\\SQLEXPRESS;initial catalog=Peoples;user Id=sa; pwd=senai@132";
 
         /// <summary>
         /// Atualiza um funcionário existente
