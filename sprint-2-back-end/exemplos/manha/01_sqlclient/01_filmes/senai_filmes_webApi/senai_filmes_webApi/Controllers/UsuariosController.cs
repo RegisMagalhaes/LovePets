@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using senai_filmes_webApi.Domains;
 using senai_filmes_webApi.Interfaces;
 using senai_filmes_webApi.Repositories;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 /// <summary>
 /// Controller responsável pelos endpoints (URLs) referentes aos usuários
@@ -50,8 +54,38 @@ namespace senai_filmes_webApi.Controllers
                 return NotFound("E-mail ou senha inválidos!");
             }
 
-            // Caso encontre, retorna um status code 200 com os dados do usuário buscado
-            return Ok(usuarioBuscado);
+            // Caso encontre, prossegue para a criação do token
+
+            // Define os dados que serão fornecidos no token - Payload
+            var claims = new[]
+            {
+                // Formato da Claim = TipoDaClaim, ValorDaClaim
+                new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.email),
+                new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.idUsuario.ToString()),
+                new Claim(ClaimTypes.Role, usuarioBuscado.permissao),
+                new Claim("Claim personalizada", "Valor teste")
+            };
+
+            // Define a chave de acesso ao token
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("filmes-chave-autenticacao"));
+
+            // Define as credenciais do token - Header
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            // Gerar o token
+            var token = new JwtSecurityToken(
+                issuer: "Filmes.webApi",                // emissor do token
+                audience: "Filmes.webApi",              // destinatário do token
+                claims: claims,                         // dados definidos acima (linha 59)
+                expires: DateTime.Now.AddMinutes(30),   // tempo de expiração
+                signingCredentials: creds               // credenciais do token
+            );
+
+            // Retorna um status code 200 - Ok com o token criado
+            return Ok(new
+            {
+                token = new JwtSecurityTokenHandler().WriteToken(token)
+            });
         }
     }
 }
