@@ -43,7 +43,7 @@ namespace senai_filmes_webApi.Controllers
         /// Qualquer usuário logado pode listar
         /// [Authorize] => verifica se o usuário está logado
         [Authorize]
-        [HttpGet]
+        [HttpGet("Listar")]
         public IActionResult Get()
         {
             // Cria uma lista nomeada listaGeneros para receber os dados
