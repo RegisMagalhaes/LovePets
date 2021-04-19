@@ -77,7 +77,7 @@ namespace senai_filmes_webApi.Controllers
                 issuer: "Filmes.webApi",               // emissor do token
                 audience: "Filmes.webApi",             // destinatário do token
                 claims: claims,                        // dados definidos acima (linha 59)
-                expires: DateTime.Now.AddMinutes(1),  // tempo de expiração
+                expires: DateTime.Now.AddMinutes(30),  // tempo de expiração
                 signingCredentials: creds              // credenciais do token
             );
 

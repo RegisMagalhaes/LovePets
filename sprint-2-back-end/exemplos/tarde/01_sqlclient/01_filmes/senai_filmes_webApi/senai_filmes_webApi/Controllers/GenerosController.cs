@@ -45,7 +45,7 @@ namespace senai_filmes_webApi.Controllers
         /// <returns>Uma lista de gêneros e um status code</returns>
         /// http://localhost:5000/api/generos
         /// o usuário precisa estar logado para listar todos os gêneros
-        [Authorize] // verifica se o usuário está logado
+        // [Authorize] // verifica se o usuário está logado
         [HttpGet]
         public IActionResult Get()
         {
