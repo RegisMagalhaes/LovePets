@@ -5,6 +5,16 @@ using senai_InLock_webApi_DBFirst.Domains;
 
 #nullable disable
 
+// Scaffol-DbContext "Data Source=SERVIDOR; initial catalog=InLock_Games; user Id=sa; pwd=senai@132;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Domains -ContextDir Contexts -Context InLockContext
+
+// Comando:                                 Scaffold-DbContext
+// String de conexão:                       "Data Source=SERVIDOR; initial catalog=InLock_Games; user Id=sa; pwd=senai@132;"
+// Provedor utilizado:                      Microsoft.EntityFrameworkCore.SqlServer
+// Nome da pasta onde ficarão os domínios:  -OutputDir Domains
+// Nome da pasta onde ficarão os contextos: -ContextDir Contexts
+// Nome da classe de contexto:              -Context InLockContext
+
+
 namespace senai_InLock_webApi_DBFirst.Contexts
 {
     public partial class InLockContext : DbContext
