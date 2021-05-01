@@ -14,6 +14,9 @@ namespace senai_gufi_webApi.Repositories
     /// </summary>
     public class UsuarioRepository : IUsuarioRepository
     {
+        /// <summary>
+        /// Objeto contexto por onde serão chamados os métodos do EF Core
+        /// </summary>
         GufiContext ctx = new GufiContext();
 
         /// <summary>

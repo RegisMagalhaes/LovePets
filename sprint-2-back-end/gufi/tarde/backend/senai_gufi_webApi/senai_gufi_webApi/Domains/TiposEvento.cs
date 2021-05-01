@@ -18,6 +18,7 @@ namespace senai_gufi_webApi.Domains
 
         public int IdTipoEvento { get; set; }
 
+        // Define que o campo é obrigatório
         [Required(ErrorMessage = "O título do tipo de evento é obrigatório!")]
         public string TituloTipoEvento { get; set; }
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System;
@@ -43,6 +44,42 @@ namespace senai_gufi_webApi
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+            services
+                // Define a forma de autenticação
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = "JwtBearer";
+                    options.DefaultChallengeScheme = "JwtBearer";
+                })
+
+                // Define os parâmetros de validação do token
+                .AddJwtBearer("JwtBearer", options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // Valida quem está solicitando
+                        ValidateIssuer = true,
+
+                        // Valida quem está recebendo
+                        ValidateAudience = true,
+
+                        // Define se o tempo de expiração será validado
+                        ValidateLifetime = true,
+
+                        // Forma de criptografia e ainda valida a chave de autenticação
+                        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("gufi-chave-autenticacao")),
+
+                        // Valida o tempo de expiração do token
+                        ClockSkew = TimeSpan.FromMinutes(30),
+
+                        // Nome do issuer, de onde está vindo
+                        ValidIssuer = "gufi.webApi",
+
+                        // Nome do audience, para onde está indo
+                        ValidAudience = "gufi.webApi"
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +102,12 @@ namespace senai_gufi_webApi
             });
 
             app.UseRouting();
+
+            // Habilita a autenticação
+            app.UseAuthentication();
+
+            // Habilita a autorização
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

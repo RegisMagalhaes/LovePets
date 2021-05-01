@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace senai_gufi_webApi.Interfaces
 {
+    /// <summary>
+    /// Interface responsável pelo repositório UsuarioRepository
+    /// </summary>
     interface IUsuarioRepository
     {
         /// <summary>
