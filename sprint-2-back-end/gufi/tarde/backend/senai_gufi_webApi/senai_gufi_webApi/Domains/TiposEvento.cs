@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 #nullable disable
@@ -7,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace senai_gufi_webApi.Domains
 {
     /// <summary>
-    /// Classe representa a entidade (tabela) de tipos de eventos
+    /// Classe que representa a entidade (tabela) de tipos de eventos
     /// </summary>
     public partial class TiposEvento
     {
@@ -19,6 +18,7 @@ namespace senai_gufi_webApi.Domains
         public int IdTipoEvento { get; set; }
 
         // Define que o campo é obrigatório
+
         [Required(ErrorMessage = "O título do tipo de evento é obrigatório!")]
         public string TituloTipoEvento { get; set; }
 

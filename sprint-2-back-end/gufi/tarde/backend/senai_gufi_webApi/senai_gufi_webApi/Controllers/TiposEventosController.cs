@@ -1,23 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using senai_gufi_webApi.Domains;
 using senai_gufi_webApi.Interfaces;
 using senai_gufi_webApi.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-/// <summary>
-/// Controller responsável pelos endpoints (URLs) referentes aos tipos de eventos
-/// </summary>
 namespace senai_gufi_webApi.Controllers
 {
+    /// <summary>
+    /// Controller responsável pelos endpoints (URLs) referentes aos tipos de eventos
+    /// </summary>
+
     // Define que o tipo de resposta da API será no formato JSON
     [Produces("application/json")]
 
     // Define que a rota de uma requisição será no formato dominio/api/nomeController
-    // ex: http://localhost:5000/api/tiposeventos
+    // ex: http://localhost:5000/api/tiposEventos
     [Route("api/[controller]")]
 
     // Define que é um controlador de API
@@ -25,12 +22,12 @@ namespace senai_gufi_webApi.Controllers
     public class TiposEventosController : ControllerBase
     {
         /// <summary>
-        /// Objeto que irá receber os métodos definidos na interface ITiposEventoRepository
+        /// Objeto _tiposEventoRepository que irá receber todos os métodos definidos na interface ITiposEventoRepository
         /// </summary>
         private ITiposEventoRepository _tiposEventoRepository { get; set; }
 
         /// <summary>
-        /// Instancia o objeto _tiposEventoRepository para que haja a referência aos métodos do repositório
+        /// Instancia o objeto _tiposEventoRepository para que haja a referência aos métodos no repositório
         /// </summary>
         public TiposEventosController()
         {
@@ -47,39 +44,37 @@ namespace senai_gufi_webApi.Controllers
             try
             {
                 // Retorna a resposta da requisição fazendo a chamada para o método
-                return Ok(_tiposEventoRepository.ListarTodos());
+                return Ok(_tiposEventoRepository.Listar());
             }
-            catch (Exception ex)
+            catch (Exception erro)
             {
-                // Retorna um status code 400 - BadRequest com o código da exception
-                return BadRequest(ex);
+                return BadRequest(erro);
             }
         }
 
         /// <summary>
-        /// Busca um tipo de evento através do id
+        /// Busca um tipo de evento através do ID
         /// </summary>
         /// <param name="id">ID do tipo de evento que será buscado</param>
-        /// <returns>Um tipo de evento buscadoe um status code 200 - Ok</returns>
+        /// <returns>Um tipo de evento buscado e um status code 200 - Ok</returns>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             try
             {
-                // Retorna a resposta da requisição fazendo a chamada para o método
+                // Retora a resposta da requisição fazendo a chamada para o método
                 return Ok(_tiposEventoRepository.BuscarPorId(id));
             }
-            catch (Exception ex)
+            catch (Exception erro)
             {
-                // Retorna um status code 400 - BadRequest com o código da exception
-                return BadRequest(ex);
+                return BadRequest(erro);
             }
         }
 
         /// <summary>
         /// Cadastra um novo tipo de evento
         /// </summary>
-        /// <param name="novoTipoEvento">Objeto que será cadastrado</param>
+        /// <param name="novoTipoEvento">Objeto novoTipoEvento que será cadastrado</param>
         /// <returns>Um status code 201 - Created</returns>
         [HttpPost]
         public IActionResult Post(TiposEvento novoTipoEvento)
@@ -94,7 +89,6 @@ namespace senai_gufi_webApi.Controllers
             }
             catch (Exception ex)
             {
-                // Retorna um status code 400 - BadRequest com o código da exception
                 return BadRequest(ex);
             }
         }
@@ -118,7 +112,6 @@ namespace senai_gufi_webApi.Controllers
             }
             catch (Exception ex)
             {
-                // Retorna um status code 400 - BadRequest com o código da exception
                 return BadRequest(ex);
             }
         }
@@ -141,7 +134,6 @@ namespace senai_gufi_webApi.Controllers
             }
             catch (Exception ex)
             {
-                // Retorna um status code 400 - BadRequest com o código da exception
                 return BadRequest(ex);
             }
         }

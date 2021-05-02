@@ -14,37 +14,37 @@ namespace senai_gufi_webApi.Controllers
     [Produces("application/json")]
 
     // Define que a rota de uma requisição será no formato dominio/api/nomeController
-    // ex: http://localhost:5000/api/tiposEventos
+    // ex: http://localhost:5000/api/tiposUsuarios
     [Route("api/[controller]")]
 
     // Define que é um controlador de API
     [ApiController]
-    public class TiposEventosController : ControllerBase
+    public class TiposUsuariosController : ControllerBase
     {
         /// <summary>
-        /// Objeto _tiposEventoRepository que irá receber todos os métodos definidos na interface ITiposEventoRepository
+        /// Objeto _tiposUsuarioRepository que irá receber todos os métodos definidos na interface ITiposUsuarioRepository
         /// </summary>
-        private ITiposEventoRepository _tiposEventoRepository { get; set; }
+        private ITiposUsuarioRepository _tiposUsuarioRepository { get; set; }
 
         /// <summary>
-        /// Instancia o objeto _tiposEventoRepository para que haja a referência aos métodos no repositório
+        /// Instancia o objeto _tiposUsuarioRepository para que haja a referência aos métodos no repositório
         /// </summary>
-        public TiposEventosController()
+        public TiposUsuariosController()
         {
-            _tiposEventoRepository = new TiposEventoRepository();
+            _tiposUsuarioRepository = new TiposUsuarioRepository();
         }
 
         /// <summary>
-        /// Lista todos os tipos de eventos
+        /// Lista todos os tipos de usuários
         /// </summary>
-        /// <returns>Uma lista de tipos de eventos e um status code 200 - Ok</returns>
+        /// <returns>Uma lista de tipos de usuários e um status code 200 - Ok</returns>
         [HttpGet]
         public IActionResult Get()
         {
             try
             {
                 // Retorna a resposta da requisição fazendo a chamada para o método
-                return Ok(_tiposEventoRepository.Listar());
+                return Ok(_tiposUsuarioRepository.Listar());
             }
             catch (Exception erro)
             {
@@ -53,17 +53,17 @@ namespace senai_gufi_webApi.Controllers
         }
 
         /// <summary>
-        /// Busca um tipo de evento através do ID
+        /// Busca um tipo de usuário através do ID
         /// </summary>
-        /// <param name="id">ID do tipo de evento que será buscado</param>
-        /// <returns>Um tipo de evento buscado e um status code 200 - Ok</returns>
+        /// <param name="id">ID do tipo de usuário que será buscado</param>
+        /// <returns>Um tipo de usuário buscado e um status code 200 - Ok</returns>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             try
             {
                 // Retora a resposta da requisição fazendo a chamada para o método
-                return Ok(_tiposEventoRepository.BuscarPorId(id));
+                return Ok(_tiposUsuarioRepository.BuscarPorId(id));
             }
             catch (Exception erro)
             {
@@ -72,17 +72,17 @@ namespace senai_gufi_webApi.Controllers
         }
 
         /// <summary>
-        /// Cadastra um novo tipo de evento
+        /// Cadastra um novo tipo de usuário
         /// </summary>
-        /// <param name="novoTipoEvento">Objeto novoTipoEvento que será cadastrado</param>
+        /// <param name="novoTipousuario">Objeto novoTipoUsuario que será cadastrado</param>
         /// <returns>Um status code 201 - Created</returns>
         [HttpPost]
-        public IActionResult Post(TiposEvento novoTipoEvento)
+        public IActionResult Post(TiposUsuario novoTipousuario)
         {
             try
             {
                 // Faz a chamada para o método
-                _tiposEventoRepository.Cadastrar(novoTipoEvento);
+                _tiposUsuarioRepository.Cadastrar(novoTipousuario);
 
                 // Retorna um status code
                 return StatusCode(201);
@@ -94,18 +94,18 @@ namespace senai_gufi_webApi.Controllers
         }
 
         /// <summary>
-        /// Atualiza um tipo de evento existente
+        /// Atualiza um tipo de usuário existente
         /// </summary>
-        /// <param name="id">ID do tipo de evento que será atualizado</param>
-        /// <param name="tipoEventoAtualizado">Objeto com as novas informações</param>
+        /// <param name="id">ID do tipo de usuário que será atualizado</param>
+        /// <param name="tipoUsuarioAtualizado">Objeto com as novas informações</param>
         /// <returns>Um status code 204 - No Content</returns>
         [HttpPut("{id}")]
-        public IActionResult Put(int id, TiposEvento tipoEventoAtualizado)
+        public IActionResult Put(int id, TiposUsuario tipoUsuarioAtualizado)
         {
             try
             {
                 // Faz a chamada para o método
-                _tiposEventoRepository.Atualizar(id, tipoEventoAtualizado);
+                _tiposUsuarioRepository.Atualizar(id, tipoUsuarioAtualizado);
 
                 // Retorna um status code
                 return StatusCode(204);
@@ -117,9 +117,9 @@ namespace senai_gufi_webApi.Controllers
         }
 
         /// <summary>
-        /// Deleta um tipo de evento existente
+        /// Deleta um tipo de usuário existente
         /// </summary>
-        /// <param name="id">ID do tipo de evento que será deletado</param>
+        /// <param name="id">ID do tipo de usuário que será deletado</param>
         /// <returns>Um status code 204 - No Content</returns>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
@@ -127,7 +127,7 @@ namespace senai_gufi_webApi.Controllers
             try
             {
                 // Faz a chamada para o método
-                _tiposEventoRepository.Deletar(id);
+                _tiposUsuarioRepository.Deletar(id);
 
                 // Retorna um status code
                 return StatusCode(204);

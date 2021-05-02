@@ -1,4 +1,5 @@
-﻿using senai_gufi_webApi.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using senai_gufi_webApi.Contexts;
 using senai_gufi_webApi.Domains;
 using senai_gufi_webApi.Interfaces;
 using System;

@@ -1,10 +1,8 @@
 ﻿using senai_gufi_webApi.Contexts;
 using senai_gufi_webApi.Domains;
 using senai_gufi_webApi.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace senai_gufi_webApi.Repositories
 {
@@ -22,31 +20,31 @@ namespace senai_gufi_webApi.Repositories
         /// Atualiza um tipo de evento existente
         /// </summary>
         /// <param name="id">ID do tipo de evento que será atualizado</param>
-        /// <param name="tipoEventoAtualizado">Objeto tipoEventoAtualizado com as novas informações</param>
+        /// <param name="tipoEventoAtualizado">Objeto com as novas informações</param>
         public void Atualizar(int id, TiposEvento tipoEventoAtualizado)
         {
             // Busca um tipo de evento através do id
-            TiposEvento tipoEventoBuscado = BuscarPorId(id);
+            TiposEvento tipoEventoBuscado = ctx.TiposEventos.Find(id);
 
             // Verifica se o título do tipo de evento foi informado
             if (tipoEventoAtualizado.TituloTipoEvento != null)
             {
-                // Atribui os novos valores aos campos existentes
+                // Atribui os novos valores ao campos existentes
                 tipoEventoBuscado.TituloTipoEvento = tipoEventoAtualizado.TituloTipoEvento;
             }
 
             // Atualiza o tipo de evento que foi buscado
             ctx.TiposEventos.Update(tipoEventoBuscado);
 
-            // Salva as informações para serem gravadas no banco de dados
+            // Salva as informações para serem gravadas no banco
             ctx.SaveChanges();
         }
 
         /// <summary>
-        /// Busca um tipo de evento através do seu ID
+        /// Busca um tipo de evento através do ID
         /// </summary>
         /// <param name="id">ID do tipo de evento que será buscado</param>
-        /// <returns>Um tipo de evento encontrado</returns>
+        /// <returns>Um tipo de evento buscado</returns>
         public TiposEvento BuscarPorId(int id)
         {
             // Retorna o primeiro tipo de evento encontrado para o ID informado
@@ -54,7 +52,7 @@ namespace senai_gufi_webApi.Repositories
         }
 
         /// <summary>
-        /// Cadastra um tipo de evento
+        /// Cadastra um novo tipo de evento
         /// </summary>
         /// <param name="novoTipoEvento">Objeto novoTipoEvento que será cadastrado</param>
         public void Cadastrar(TiposEvento novoTipoEvento)
@@ -72,8 +70,11 @@ namespace senai_gufi_webApi.Repositories
         /// <param name="id">ID do tipo de evento que será deletado</param>
         public void Deletar(int id)
         {
+            // Busca um tipo de evento através do id
+            TiposEvento tipoEventoBuscado = ctx.TiposEventos.Find(id);
+
             // Remove o tipo de evento que foi buscado
-            ctx.TiposEventos.Remove(BuscarPorId(id));
+            ctx.TiposEventos.Remove(tipoEventoBuscado);
 
             // Salva as alterações
             ctx.SaveChanges();
@@ -83,7 +84,7 @@ namespace senai_gufi_webApi.Repositories
         /// Lista todos os tipos de eventos
         /// </summary>
         /// <returns>Uma lista de tipos de eventos</returns>
-        public List<TiposEvento> ListarTodos()
+        public List<TiposEvento> Listar()
         {
             // Retorna uma lista com todas as informações dos tipos de eventos
             return ctx.TiposEventos.ToList();

@@ -1,36 +1,30 @@
 ﻿using senai_gufi_webApi.Domains;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace senai_gufi_webApi.Interfaces
 {
     /// <summary>
-    /// Classe responsável pelo repositório TiposEventoRepository
+    /// Interface responsável pelo TiposEventoRepository
     /// </summary>
     interface ITiposEventoRepository
     {
-        // Estrutura de um método
-        // TipoRetorno NomeMetodo(TipoParametro NomeParametro);
-
         /// <summary>
         /// Lista todos os tipos de eventos
         /// </summary>
         /// <returns>Uma lista de tipos de eventos</returns>
-        List<TiposEvento> ListarTodos();
+        List<TiposEvento> Listar();
 
         /// <summary>
         /// Busca um tipo de evento através do ID
         /// </summary>
         /// <param name="id">ID do tipo de evento que será buscado</param>
-        /// <returns>Um tipo de evento encontrado</returns>
+        /// <returns>Um tipo de evento buscado</returns>
         TiposEvento BuscarPorId(int id);
 
         /// <summary>
         /// Cadastra um novo tipo de evento
         /// </summary>
-        /// <param name="novoTipoEvento">Objeto com as informações que serão cadastradas</param>
+        /// <param name="novoTipoEvento">Objeto novoTipoEvento que será cadastrado</param>
         void Cadastrar(TiposEvento novoTipoEvento);
 
         /// <summary>

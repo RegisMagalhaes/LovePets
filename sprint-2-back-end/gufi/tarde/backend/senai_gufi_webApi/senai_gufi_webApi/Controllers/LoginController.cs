@@ -1,16 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using senai_gufi_webApi.Domains;
 using senai_gufi_webApi.Interfaces;
 using senai_gufi_webApi.Repositories;
 using senai_gufi_webApi.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace senai_gufi_webApi.Controllers
 {
@@ -21,8 +17,7 @@ namespace senai_gufi_webApi.Controllers
     // Define que o tipo de resposta da API será no formato JSON
     [Produces("application/json")]
 
-    // Define que a rota de uma requisição será no formato dominio/api/nomeController
-    // ex: http://localhost:5000/api/login
+    // Define que a rota de uma requisição será no formato domínio/api/NomeController
     [Route("api/[controller]")]
 
     // Define que é um controlador de API
@@ -30,12 +25,12 @@ namespace senai_gufi_webApi.Controllers
     public class LoginController : ControllerBase
     {
         /// <summary>
-        /// Objeto que irá receber os métodos definidos na interface IUsuarioRepository
+        /// Cria um objeto _usuarioRepository que irá receber todos os métodos definidos na interface
         /// </summary>
         private IUsuarioRepository _usuarioRepository { get; set; }
 
         /// <summary>
-        /// Instancia o objeto _usuarioRepository para que haja a referência aos métodos do repositório
+        /// Instancia este objeto para que haja a referência aos métodos no repositório
         /// </summary>
         public LoginController()
         {
@@ -43,22 +38,23 @@ namespace senai_gufi_webApi.Controllers
         }
 
         /// <summary>
-        /// Valida a usuário
+        /// Valida o usuário
         /// </summary>
-        /// <param name="login">Objeto que contém o e-mail e a senha do usuário</param>
+        /// <param name="login">Objeto login que contém o e-mail e a senha do usuário</param>
         /// <returns>Retorna um token com as informações do usuário</returns>
+        /// dominio/api/Login
         [HttpPost]
-        public IActionResult Login(LoginViewModel login)
+        public IActionResult Post(LoginViewModel login)
         {
             try
             {
                 // Busca o usuário pelo e-mail e senha
                 Usuario usuarioBuscado = _usuarioRepository.Login(login.Email, login.Senha);
 
-                // Caso não encontre um usuário com o e-mail e senha informados
+                // Caso não encontre nenhum usuário com o e-mail e senha informados
                 if (usuarioBuscado == null)
                 {
-                    // Retorna NotFound com uma mensagem personalizada
+                    // Retorna NotFound com uma mensagem de erro
                     return NotFound("E-mail ou senha inválidos!");
                 }
 
@@ -66,9 +62,9 @@ namespace senai_gufi_webApi.Controllers
 
                 /*
                     Dependências
-                
-                    Criar e validar o JWT:           System.IdentityModel.Tokens.Jwt
-                    Integrar a autenticação:         Microsoft.AspNetCore.Authentication.JwtBearer (versão compatível com o .NET SDK do projeto)
+
+                    Criar e validar o JWT:      System.IdentityModel.Tokens.Jwt
+                    Integrar a autenticação:    Microsoft.AspNetCore.Authentication.JwtBearer (versão compatível com o .NET do projeto)
                 */
 
                 // Define os dados que serão fornecidos no token - Payload
@@ -80,40 +76,34 @@ namespace senai_gufi_webApi.Controllers
                     // Armazena na Claim o ID do usuário autenticado
                     new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.IdUsuario.ToString()),
 
-                    // Outra forma, armazenando o título do tipo de usuário
-                    // Armazena na Claim o tipo de usuário que foi autenticado ("Administrador")
-                    // new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuarioNavigation.TituloTipoUsuario)
-
-                    // Armazena na Claim o tipo de usuário que foi autenticado ("1")
+                    // Armazena na Claim o tipo de usuário que foi autenticado (Administrador ou Comum)
                     new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuario.ToString())
                 };
 
                 // Define a chave de acesso ao token
                 var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("gufi-chave-autenticacao"));
 
-                // Define as credenciais do token
+                // Define as credenciais do token - Header
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                // Definir os dados do token
-                var dadosToken = new JwtSecurityToken(
-                        issuer:                 "gufi.webApi",                  // emissor do token
-                        audience:               "gufi.webApi",                  // destinatário do token
-                        claims:                 claims,                         // dados definidos acima (linha 70)
-                        expires:                DateTime.Now.AddMinutes(30),    // tempo de expiração
-                        signingCredentials:     creds                           // credenciais do token
-                    );
+                // Gera o token
+                var token = new JwtSecurityToken(
+                    issuer: "gufi.webApi",                 // emissor do token
+                    audience: "gufi.webApi",               // destinatário do token
+                    claims: claims,                        // dados definidos acima
+                    expires: DateTime.Now.AddMinutes(30),  // tempo de expiração
+                    signingCredentials: creds              // credenciais do token
+                );
 
                 // Retorna Ok com o token
-                return Ok(new 
-                { 
-                    token = new JwtSecurityTokenHandler().WriteToken(dadosToken)
+                return Ok(new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token)
                 });
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return BadRequest(ex);
             }
         }
     }
