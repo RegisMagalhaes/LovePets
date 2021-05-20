@@ -18,29 +18,6 @@ class Clock extends React.Component{
     };
   }
 
-  // Define a função para remover o timerID do relógio
-  botaoPausarRelogio(){
-    // Exibe no console qual relógio teve seu timerID removido, ou seja, qual relógio foi pausado
-    console.log('Relógio ' + this.timerID + ' pausado!');
-
-    // Remove o timerID deste relógio
-    clearInterval(this.timerID);
-  }
-
-  // Define a função para inserir um novo timerID no relógio
-  botaoRetomarRelogio(){
-    // Exibe no console que o relógio voltou a funcionar
-    console.log('Reógio retomado!');
-
-    // Retorna um novo identificador ao relógio
-    this.timerID = setInterval(() => {
-      this.thick()
-    },1000);
-
-    // Exibe na tela a qual timerID o relógio está atrelado agora
-    console.log("Agora eu sou o relógio " + this.timerID)
-  }
-
   // Ciclo de vida que ocorre quando Clock é inserida no DOM
   // Através do setInterval, o relógio é criado (com um timerID atrelado)
   // Chama a função thick a cada 1000ms (1s)
@@ -72,27 +49,6 @@ class Clock extends React.Component{
       <div>
         <h1>Relógio</h1>
         <DataFormatada date={this.state.date} />
-
-        {/* Adiciona um botão para chamar a função para pausar o relógio */}
-        <button onClick={(event) => this.botaoPausarRelogio(event)}
-        style={{
-          color:"White", 
-          backgroundColor:"Red", 
-          marginRight:"20px", 
-          height:"25px", 
-          fontWeight:600}}>
-            Pausar relógio
-        </button>
-
-        {/* Adiciona um botão para chamar a função para retomar o relógio */}
-        <button onClick={(event) => this.botaoRetomarRelogio(event)}
-        style={{
-          color:"White", 
-          backgroundColor:"Green", 
-          height:"25px",
-          fontWeight:600}}>
-            Retomar relógio
-        </button>
       </div>
     )
   }
