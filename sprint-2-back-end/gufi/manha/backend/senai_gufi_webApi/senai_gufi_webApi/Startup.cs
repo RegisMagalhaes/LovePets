@@ -22,17 +22,29 @@ namespace senai_gufi_webApi
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                // Adiciona o serviço dos Controllers
+                // Adiciona o serviï¿½o dos Controllers
                 .AddControllers()
                 .AddNewtonsoftJson(options =>
                 {
                     // Ignora os loopings nas consultas
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    // Ignora valores nulos ao fazer junções nas consultas
+                    // Ignora valores nulos ao fazer junï¿½ï¿½es nas consultas
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 });
 
-            // Adiciona o serviço do Swagger
+            // Adiciona o CORS ao projeto
+            services.AddCors(options => {
+                options.AddPolicy("CorsPolicy", 
+                    builder => {
+                        builder.WithOrigins("http://localhost:3000")
+                                                                    .AllowAnyHeader()
+                                                                    .AllowAnyMethod();
+                    }
+                );
+            });
+
+
+            // Adiciona o serviï¿½o do Swagger
             // https://docs.microsoft.com/pt-br/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -46,37 +58,37 @@ namespace senai_gufi_webApi
             });
 
             services
-                // Define a forma de autenticação
+                // Define a forma de autenticaï¿½ï¿½o
                 .AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = "JwtBearer";
                     options.DefaultChallengeScheme = "JwtBearer";
                 })
 
-                // Define os parâmetros de validação do token
+                // Define os parï¿½metros de validaï¿½ï¿½o do token
                 .AddJwtBearer("JwtBearer", options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        // Valida quem está solicitando
+                        // Valida quem estï¿½ solicitando
                         ValidateIssuer = true,
 
-                        // Valida quem está recebendo
+                        // Valida quem estï¿½ recebendo
                         ValidateAudience = true,
 
-                        // Define se o tempo de expiração será validado
+                        // Define se o tempo de expiraï¿½ï¿½o serï¿½ validado
                         ValidateLifetime = true,
 
-                        // Forma de criptografia e ainda valida a chave de autenticação
+                        // Forma de criptografia e ainda valida a chave de autenticaï¿½ï¿½o
                         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("gufi-chave-autenticacao")),
 
-                        // Valida o tempo de expiração do token
+                        // Valida o tempo de expiraï¿½ï¿½o do token
                         ClockSkew = TimeSpan.FromMinutes(30),
 
-                        // Nome do issuer, de onde está vindo
+                        // Nome do issuer, de onde estï¿½ vindo
                         ValidIssuer = "gufi.webApi",
 
-                        // Nome do audience, para onde está indo
+                        // Nome do audience, para onde estï¿½ indo
                         ValidAudience = "gufi.webApi"
                     };
                 });
@@ -103,11 +115,13 @@ namespace senai_gufi_webApi
 
             app.UseRouting();
 
-            // Habilita a autenticação
+            // Habilita a autenticaï¿½ï¿½o
             app.UseAuthentication();
 
-            // Habilita a autorização
+            // Habilita a autorizaï¿½ï¿½o
             app.UseAuthorization();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {

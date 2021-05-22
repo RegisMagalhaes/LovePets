@@ -22,17 +22,28 @@ namespace senai_gufi_webApi
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                // Adiciona o serviço dos Controllers
+                // Adiciona o serviï¿½o dos Controllers
                 .AddControllers()
                 .AddNewtonsoftJson(options =>
                 {
                     // Ignora os loopings nas consultas
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    // Ignora valores nulos ao fazer junções nas consultas
+                    // Ignora valores nulos ao fazer junï¿½ï¿½es nas consultas
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 });
 
-            // Adiciona o serviço do Swagger
+            // Adiciona o CORS ao projeto
+            services.AddCors(options => {
+                options.AddPolicy("CorsPolicy", 
+                    builder => {
+                        builder.WithOrigins("http://localhost:3000")
+                                                                    .AllowAnyHeader()
+                                                                    .AllowAnyMethod();
+                    }
+                );
+            });
+
+            // Adiciona o serviï¿½o do Swagger
             // https://docs.microsoft.com/pt-br/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -46,7 +57,7 @@ namespace senai_gufi_webApi
             });
 
             services
-                // Define a forma de autenticação
+                // Define a forma de autenticaï¿½ï¿½o
                 .AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = "JwtBearer";
@@ -57,25 +68,25 @@ namespace senai_gufi_webApi
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        // define que o issuer será validado
+                        // define que o issuer serï¿½ validado
                         ValidateIssuer = true,
 
-                        // define que o audience será validado
+                        // define que o audience serï¿½ validado
                         ValidateAudience = true,
 
-                        // define que o tempo de vida será validado
+                        // define que o tempo de vida serï¿½ validado
                         ValidateLifetime = true,
 
-                        // forma de criptografia e a chave de autenticação
+                        // forma de criptografia e a chave de autenticaï¿½ï¿½o
                         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("gufi-chave-autenticacao")),
 
-                        // verifica o tempo de expiração do token
+                        // verifica o tempo de expiraï¿½ï¿½o do token
                         ClockSkew = TimeSpan.FromMinutes(30),
 
-                        // define o nome da issuer, de onde está vindo
+                        // define o nome da issuer, de onde estï¿½ vindo
                         ValidIssuer = "gufi.webApi",
 
-                        // define o nome da audience, para onde está indo
+                        // define o nome da audience, para onde estï¿½ indo
                         ValidAudience = "gufi.webApi"
                     };
                 });
@@ -104,11 +115,14 @@ namespace senai_gufi_webApi
 
             app.UseRouting();
 
-            // Habilita autenticação
+            // Habilita autenticaï¿½ï¿½o
             app.UseAuthentication();
 
-            // Habilita autorização
+            // Habilita autorizaï¿½ï¿½o
             app.UseAuthorization();
+
+            // Habilita o CORS
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
