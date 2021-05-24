@@ -121,6 +121,7 @@ namespace senai_gufi_webApi
             // Habilita a autoriza��o
             app.UseAuthorization();
 
+            // Define o uso de CORS
             app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
