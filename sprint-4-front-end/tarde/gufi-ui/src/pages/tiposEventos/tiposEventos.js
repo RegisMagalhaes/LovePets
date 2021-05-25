@@ -139,6 +139,33 @@ class TiposEventos extends Component{
         });
     };
 
+    // Função responsável por excluir um Tipo de Evento
+    excluirTipoEvento = (tipoEvento) => {
+        // Exibe no console do navegador o ID do Tipo de Evento recebido
+        console.log('O Tipo de Evento ' + tipoEvento.idTipoEvento + ' foi selecionado!')
+
+        // Faz a chamada para a API usando fetch passando o ID do Tipo de Evento recebido na URL da requisição
+        fetch('http://localhost:5000/api/tiposeventos/' + tipoEvento.idTipoEvento, {
+            // Define o método da requisição ( DELETE )
+            method : 'DELETE'
+        })
+
+        // Caso a requisição retorne um status code 204,
+        .then(resposta => {
+            if (resposta.status === 204) {
+                // Exibe no console do navegador a mensagem 'Tipo de Evento x excluído!' onde x é o ID do Tipo de Evento excluído
+                console.log('Tipo de Evento ' + tipoEvento.idTipoEvento + ' excluído!')
+            }
+        })
+
+        // Caso ocorra algum erro, exibe este erro no console do navegador
+        .catch(erro => console.log(erro))
+
+        // Então, atualiza a lista de Tipos de Evento 
+        // sem o usuário precisar executar outra ação
+        .then(this.buscarTiposEventos)
+    }
+
     // Reseta os states titulo e idTipoEventoAlterado
     limparCampos = () => {
         this.setState({
@@ -176,8 +203,10 @@ class TiposEventos extends Component{
                                                 <td>{tipoEvento.tituloTipoEvento}</td>
 
                                                 {/* Faz a chamada da função buscarTipoEventoPorId passando o Tipo de Evento selecionado */}
-                                                
                                                 <td><button onClick={() => this.buscarTipoEventoPorId(tipoEvento)}>Editar</button></td>
+
+                                                {/* Faz a chamada da função excluirTipoEvento passando o Tipo de Evento selecionado */}
+                                                <td><button onClick={() => this.excluirTipoEvento(tipoEvento)}>Excluir</button></td>
                                             </tr>
                                         )
                                     } )
