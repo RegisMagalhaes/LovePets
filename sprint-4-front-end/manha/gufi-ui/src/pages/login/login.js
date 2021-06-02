@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { parseJwt } from '../../services/auth';
+
+import logo from '../../assets/img/logo.png';
+
+import '../../assets/css/login.css';
 
 class Login extends Component {
     constructor(props){
@@ -36,6 +41,31 @@ class Login extends Component {
                 console.log('Meu token é: ' + resposta.data.token)
                 // e define que a requisição terminou
                 this.setState({ isLoading : false })
+
+                // // Define a variável base64 que vai receber o payload do token
+                // let base64 = localStorage.getItem('usuario-login').split('.')[1];
+                // // Exibe no console o valor presente na variável base64
+                // console.log('Somente o Payload: ' + base64);
+                // // Exibe no console o valor convertido da base64 para string
+                // console.log(window.atob(base64));
+                // // Exibe no console o valor convertido da string para JSON
+                // console.log(JSON.parse(window.atob(base64)));
+                // // Exibe no console o valor convertido da string para JSON, mostrando apenas o valor da chave role
+                // console.log(JSON.parse(window.atob(base64)).role);
+
+                // Exibe no console apenas o tipo de usuário logado
+                console.log(parseJwt().role); // 1 (administrador)
+
+                // Verifica se o tipo de usuário logado é Administrador
+                // Se for, redireciona para a página de Tipos Eventos
+                if (parseJwt().role === "1") {
+                    this.props.history.push('/tiposeventos');
+                }
+
+                // Se não for, redireciona para a página home
+                else {
+                    this.props.history.push('/')
+                }
             }
         })
 
@@ -57,62 +87,85 @@ class Login extends Component {
         return(
             <div>
                 <main>
-                    <section>
-                        <p>Bem vindo(a)! <br/> Faça login para acessar a sua conta.</p>
+                    <section className="container-login flex">
+                        <div className="img__login"><div className="img__overlay"></div></div>
+                        <div className="item__login">
+                            <div className="row">
+                                <div className="item">
+                                    <img src={logo} className="icone__login" alt="logo da Gufi" />
+                                </div>
+                                <div className="item" id="item__title">
+                                    <p>Bem vindo(a)! <br/> Faça login para acessar a sua conta.</p>
+                                </div>
 
-                        {/* Faz a chamada para a função de login quando o botão é pressionado */}
-                        <form onSubmit={this.efetuaLogin}>
-                            <input 
-                                // E-mail
-                                type="text"
-                                name="email"
-                                // Define que o input email recebe o valor do state email
-                                value={this.state.email}
-                                // Faz a chamada para a função que atualiza o state, conforme o usuário altera o valor do input
-                                onChange={this.atualizaStateCampo}
-                                placeholder="username"
-                            />
+                                    {/* Faz a chamada para a função de login quando o botão é pressionado */}
+                                    <form onSubmit={this.efetuaLogin}>
+                                        <div className="item">
+                                            <input 
+                                                id="login__email"
+                                                className="input__login"
+                                                // E-mail
+                                                type="text"
+                                                name="email"
+                                                // Define que o input email recebe o valor do state email
+                                                value={this.state.email}
+                                                // Faz a chamada para a função que atualiza o state, conforme o usuário altera o valor do input
+                                                onChange={this.atualizaStateCampo}
+                                                placeholder="username"
+                                            />
+                                        </div>
 
-                            <input 
-                                // Senha
-                                type="password"
-                                name="senha"
-                                // Define que o input senha recebe o valor do state senha
-                                value={this.state.senha}
-                                // Faz a chamada para a função que atualiza o state, conforme o usuário altera o valor do input
-                                onChange={this.atualizaStateCampo}
-                                placeholder="password"
-                            />
+                                        <div className="item">
+                                            <input 
+                                                id="login__password"
+                                                className="input__login"
+                                                // Senha
+                                                type="password"
+                                                name="senha"
+                                                // Define que o input senha recebe o valor do state senha
+                                                value={this.state.senha}
+                                                // Faz a chamada para a função que atualiza o state, conforme o usuário altera o valor do input
+                                                onChange={this.atualizaStateCampo}
+                                                placeholder="password"
+                                            />
+                                        </div>
 
-                            {/* Exibe a mensagem de erro ao tentar logar com credenciais inválidas */}
-                            <p style={{ color : 'red' }} >{this.state.erroMensagem}</p>
+                                        {/* Exibe a mensagem de erro ao tentar logar com credenciais inválidas */}
+                                        <p style={{ color : 'red', textAlign : 'center' }} >{this.state.erroMensagem}</p>
 
-                            {/* 
-                                Verifica se a requisição está em andamento.
-                                Se estiver, desabilita o click do botão
-                            */}
+                                        {/* 
+                                            Verifica se a requisição está em andamento.
+                                            Se estiver, desabilita o click do botão
+                                        */}
 
-                            {
-                                // Caso seja true, renderiza o botão desabilitado com o texto 'Loading...'
-                                this.state.isLoading === true &&
-                                <button type="submit" disabled>Loading...</button>
-                            }
+                                        {
+                                            // Caso seja true, renderiza o botão desabilitado com o texto 'Loading...'
+                                            this.state.isLoading === true &&
+                                            <div className="item">
+                                                <button className="btn btn__login" id="btn__login" type="submit" disabled>Loading...</button>
+                                            </div>
+                                        }
 
-                            {
-                                // Caso seja false, renderiza o botão habilitado com o texto 'Login'
-                                this.state.isLoading === false &&
-                                <button
-                                    type="submit"
-                                    disabled={ this.state.email === '' || this.state.senha === '' ? 'none' : '' }
-                                >
-                                    Login
-                                </button>
-                            }
+                                        {
+                                            // Caso seja false, renderiza o botão habilitado com o texto 'Login'
+                                            this.state.isLoading === false &&
+                                            <div className="item">
+                                                <button
+                                                    className="btn btn__login" id="btn__login"
+                                                    type="submit"
+                                                    disabled={ this.state.email === '' || this.state.senha === '' ? 'none' : '' }
+                                                >
+                                                    Login
+                                                </button>
+                                            </div>
+                                        }
 
-                            {/* <button type="submit">
-                                Login
-                            </button> */}
-                        </form>
+                                        {/* <button type="submit">
+                                            Login
+                                        </button> */}
+                                    </form>
+                                </div>
+                            </div>
                     </section>
                 </main>
             </div>
