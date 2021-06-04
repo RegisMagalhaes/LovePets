@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { parseJwt } from '../../services/auth';
+import { parseJwt, usuarioAutenticado } from '../../services/auth';
 
 import logo from '../../assets/img/logo.png';
 
@@ -59,7 +59,11 @@ class Login extends Component {
                 // Verifica se o tipo de usuário logado é Administrador
                 // Se for, redireciona para a página de Tipos Eventos
                 if (parseJwt().role === "1") {
+                    // Mostra no console o retorno da função que verifica se o usuário está logado
+                    
+                    // console.log('estou logado: ' + usuarioAutenticado())
                     this.props.history.push('/tiposeventos');
+                    console.log(this.props);
                 }
 
                 // Se não for, redireciona para a página home

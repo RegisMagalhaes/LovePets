@@ -24,7 +24,11 @@ class TiposEventos extends Component{
         console.log('agora vamos fazer a chamada para API para atualizar a lista')
 
         // Faz a chamada para a API usando o fetch
-        fetch('http://localhost:5000/api/tiposeventos')
+        fetch('http://localhost:5000/api/tiposeventos', {
+            headers : {
+                'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
+            }
+        })
 
         // Fetch retorna uma Promise que se resolve em uma resposta ( Response )
         // .then(resposta => console.log(resposta))

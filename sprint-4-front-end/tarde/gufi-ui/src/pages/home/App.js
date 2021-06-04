@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import "../../assets/css/flexbox.css";
 import "../../assets/css/reset.css";
 import "../../assets/css/style.css";
@@ -14,10 +16,11 @@ function App() {
           <img src={logo} alt="logo da Gufi" />
 
           <nav className="cabecalhoPrincipal-nav">
-            {/* <a>Home</a>
-            <a>Eventos</a>
-            <a>Contato</a> */}
-            <a className="cabecalhoPrincipal-nav-login" href="/login">Login</a>
+            <Link to = "/">Home</Link>
+            <Link to = "/eventos">Eventos</Link>
+            <a href="#conteudoPrincipal-contato">Contato</a>
+            <Link to = "login" className="cabecalhoPrincipal-nav-login" >Login</Link>
+            {/* <a href="/login" className="cabecalhoPrincipal-nav-login" >Login</a> */}
           </nav>
         </div>
       </header>

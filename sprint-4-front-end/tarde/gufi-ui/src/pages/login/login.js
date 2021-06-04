@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { parseJwt } from '../../services/auth';
+import { parseJwt, usuarioAutenticado } from '../../services/auth';
 
 import '../../assets/css/login.css';
 
@@ -62,6 +62,8 @@ class Login extends Component {
                 // Se for, redireciona para a página Tipos Eventos
                 if (parseJwt().role === "1") {
                     // console.log(this.props);
+                    // Exibe no console do navegador um bool informando se o usuário está logado ou não
+                    // console.log(usuarioAutenticado());
                     this.props.history.push('/tiposeventos');
                 }
 
