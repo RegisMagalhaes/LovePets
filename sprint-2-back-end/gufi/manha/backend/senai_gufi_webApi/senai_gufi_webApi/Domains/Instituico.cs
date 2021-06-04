@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace senai_gufi_webApi.Domains
 {
+    /// <summary>
+    /// Classe que representa a entidade (tabela) de instituições
+    /// </summary>
     public partial class Instituico
     {
         public Instituico()

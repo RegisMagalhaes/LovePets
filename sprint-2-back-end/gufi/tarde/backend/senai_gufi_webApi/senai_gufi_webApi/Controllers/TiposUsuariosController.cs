@@ -7,7 +7,7 @@ using System;
 namespace senai_gufi_webApi.Controllers
 {
     /// <summary>
-    /// Controller responsável pelos endpoints (URLs) referentes aos tipos de eventos
+    /// Controller responsável pelos endpoints (URLs) referentes aos tipos de usuários
     /// </summary>
 
     // Define que o tipo de resposta da API será no formato JSON
