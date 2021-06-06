@@ -29,6 +29,7 @@ export default class Eventos extends Component {
                                     <th>Data</th>
                                     <th>Acesso Livre</th>
                                     <th>Tipo de Evento</th>
+                                    <th>Localização</th>
                                 </tr>
                             </thead>
 
