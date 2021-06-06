@@ -438,6 +438,8 @@ nav .cabecalhoPrincipal-nav-login {
   font-family:'Open Sans'; 
   line-height: 30px;
   letter-spacing: 2px;
+  display: flex;
+  align-items: center;
 }
 
 .conteudo-contato-titulo {
@@ -485,6 +487,12 @@ nav .cabecalhoPrincipal-nav-login {
   -webkit-box-shadow: 2px 2px 5px 0px rgba(184, 184, 184, 1);
   -moz-box-shadow: 2px 2px 5px 0px rgba(184, 184, 184, 1);
   box-shadow: 2px 2px 5px 0px rgba(184, 184, 184, 1);
+}
+
+.conteudoPrincipal-btn-cadastro:disabled {
+  background-color: rgba(184, 184, 184, 1);
+  color: #fff;
+  cursor: not-allowed;
 }
 
 /* TÍTULOS */

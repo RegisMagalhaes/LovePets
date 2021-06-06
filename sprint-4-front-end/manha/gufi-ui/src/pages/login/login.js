@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { parseJwt, usuarioAutenticado } from '../../services/auth';
 
-import logo from '../../assets/img/logo.png';
-
 import '../../assets/css/login.css';
+
+import logo from '../../assets/img/logo.png';
 
 class Login extends Component {
     constructor(props){
@@ -15,15 +16,15 @@ class Login extends Component {
             erroMensagem : '',
             isLoading : false
         }
-    }
+    };
 
     // Função que faz a chamada para a API para realizar o login
     efetuaLogin = (event) => {
-        // Ignora o comportamento padrão do navegador ( recarregar a página, por exemplo )
+        // Ignora o comportamento padrão do navegador (recarregar a página, por exemplo)
         event.preventDefault();
 
         // Remove a frase de erro do state erroMensagem e define que a requisição está em andamento
-        this.setState({ erroMensagem : '', isLoading : true })
+        this.setState({ erroMensagem : '', isLoading : true });
 
         // Define a URL e o corpo da requisição
         axios.post('http://localhost:5000/api/login', {
@@ -38,32 +39,27 @@ class Login extends Component {
                 // salva o token no localStorage,
                 localStorage.setItem('usuario-login', resposta.data.token);
                 // exibe o token no console do navegador
-                console.log('Meu token é: ' + resposta.data.token)
+                console.log('Meu token é: ' + resposta.data.token);
                 // e define que a requisição terminou
                 this.setState({ isLoading : false })
 
-                // // Define a variável base64 que vai receber o payload do token
-                // let base64 = localStorage.getItem('usuario-login').split('.')[1];
-                // // Exibe no console o valor presente na variável base64
-                // console.log('Somente o Payload: ' + base64);
-                // // Exibe no console o valor convertido da base64 para string
-                // console.log(window.atob(base64));
-                // // Exibe no console o valor convertido da string para JSON
-                // console.log(JSON.parse(window.atob(base64)));
-                // // Exibe no console o valor convertido da string para JSON, mostrando apenas o valor da chave role
-                // console.log(JSON.parse(window.atob(base64)).role);
+                // Define a variável base64 que vai receber o payload do token
+                let base64 = localStorage.getItem('usuario-login').split('.')[1];
+                // Exibe no console o valor presente na variável base64
+                console.log(base64);
+                // Exibe no console o valor convertido de base64 para string
+                console.log(window.atob(base64));
+                // Exibe no console o valor convertido da string para JSON
+                console.log(JSON.parse(window.atob(base64)));
 
                 // Exibe no console apenas o tipo de usuário logado
-                console.log(parseJwt().role); // 1 (administrador)
+                console.log(parseJwt().role);
 
                 // Verifica se o tipo de usuário logado é Administrador
                 // Se for, redireciona para a página de Tipos Eventos
-                if (parseJwt().role === "1") {
-                    // Mostra no console o retorno da função que verifica se o usuário está logado
-                    
-                    // console.log('estou logado: ' + usuarioAutenticado())
+                if (parseJwt().role === '1') {
                     this.props.history.push('/tiposeventos');
-                    console.log(this.props);
+                    console.log('estou logado: ' + usuarioAutenticado());
                 }
 
                 // Se não for, redireciona para a página home
@@ -75,17 +71,16 @@ class Login extends Component {
 
         // Caso haja um erro,
         .catch(() => {
-            // define o valor do state erroMensagem com uma mensagem personalizada e que a requisição terminou
-            this.setState({ erroMensagem : 'E-mail ou senha inválidos! Tente novamente.', isLoading : false })
-            
+            // define o state erroMensagem com uma mensagem personalizada e que a requisição terminou
+            this.setState({ erroMensagem : 'E-mail ou senha inválidos! Tente novamente.', isLoading : false });
         })
     }
 
-    // Função genérica que atualiza o state de acordo com o input 
+    // Função genérica que atualiza o state de acordo com o input
     // pode ser reutilizada em vários inputs diferentes
     atualizaStateCampo = (campo) => {
         this.setState({ [campo.target.name] : campo.target.value })
-    }
+    };
 
     render(){
         return(
@@ -93,88 +88,85 @@ class Login extends Component {
                 <main>
                     <section className="container-login flex">
                         <div className="img__login"><div className="img__overlay"></div></div>
+
                         <div className="item__login">
                             <div className="row">
                                 <div className="item">
-                                    <img src={logo} className="icone__login" alt="logo da Gufi" />
+                                    <Link to="/"><img src={logo} className="icone__login" alt="logo da Gufi" /></Link>
                                 </div>
                                 <div className="item" id="item__title">
-                                    <p>Bem vindo(a)! <br/> Faça login para acessar a sua conta.</p>
+                                    <p className="text__login" id="item__description">Bem-vindo(a)! Faça login para acessar sua conta.</p>
                                 </div>
 
-                                    {/* Faz a chamada para a função de login quando o botão é pressionado */}
-                                    <form onSubmit={this.efetuaLogin}>
+                                {/* Faz a chamada para a função de login quando o botão é pressionado */}
+                                <form onSubmit={this.efetuaLogin}>
+                                    <div className="item">
+                                        <input
+                                            id="login__email"
+                                            className="input__login"
+                                            // E-mail
+                                            type="text"
+                                            name="email"
+                                            // Define que o input email recebe o valor do state email
+                                            value={this.state.email}
+                                            // Faz a chamada para a função que atualiza o state, conforme o usuário altera o valor do input
+                                            onChange={this.atualizaStateCampo}
+                                            placeholder="username"
+                                        />
+                                    </div>
+
+                                    <div className="item">
+                                        <input 
+                                            id="login__password"
+                                            className="input__login"
+                                            // Senha
+                                            type="password"
+                                            name="senha"
+                                            // Define que o input senha recebe o valor do state senha
+                                            value={this.state.senha}
+                                            // Faz a chamada para a função que atualiza o state, conforme
+                                            // o usuário altera o valor do input
+                                            onChange={this.atualizaStateCampo}
+                                            placeholder="password"
+                                        />
+                                    </div>
+
+                                    {/* Exibe a mensagem de erro ao tentar logar com credenciais inválidas */}
+                                    <p style={{ color : 'red', textAlign : 'center' }}>{this.state.erroMensagem}</p>
+
+                                    {/* 
+                                        Verifica se a requisição está em andamento
+                                        Se estiver, desabilita o click do botão
+                                    */}
+
+                                    {
+                                        // Caso seja true, renderiza o botão desabilitado com o texto 'Loading...'
+                                        this.state.isLoading === true &&
                                         <div className="item">
-                                            <input 
-                                                id="login__email"
-                                                className="input__login"
-                                                // E-mail
-                                                type="text"
-                                                name="email"
-                                                // Define que o input email recebe o valor do state email
-                                                value={this.state.email}
-                                                // Faz a chamada para a função que atualiza o state, conforme o usuário altera o valor do input
-                                                onChange={this.atualizaStateCampo}
-                                                placeholder="username"
-                                            />
+                                            <button className="btn btn__login" id="btn__login" type="submit" disabled>Loading...</button>
                                         </div>
+                                    }
 
+                                    {
+                                        // Caso seja false, renderiza o botão habilitado com o texto 'Login'
+                                        this.state.isLoading === false &&
                                         <div className="item">
-                                            <input 
-                                                id="login__password"
-                                                className="input__login"
-                                                // Senha
-                                                type="password"
-                                                name="senha"
-                                                // Define que o input senha recebe o valor do state senha
-                                                value={this.state.senha}
-                                                // Faz a chamada para a função que atualiza o state, conforme o usuário altera o valor do input
-                                                onChange={this.atualizaStateCampo}
-                                                placeholder="password"
-                                            />
+                                            <button
+                                                className="btn btn__login" id="btn__login"
+                                                type="submit"
+                                                disabled={this.state.email === '' || this.state.senha === '' ? 'none' : ''}>
+                                                Login
+                                            </button>
                                         </div>
-
-                                        {/* Exibe a mensagem de erro ao tentar logar com credenciais inválidas */}
-                                        <p style={{ color : 'red', textAlign : 'center' }} >{this.state.erroMensagem}</p>
-
-                                        {/* 
-                                            Verifica se a requisição está em andamento.
-                                            Se estiver, desabilita o click do botão
-                                        */}
-
-                                        {
-                                            // Caso seja true, renderiza o botão desabilitado com o texto 'Loading...'
-                                            this.state.isLoading === true &&
-                                            <div className="item">
-                                                <button className="btn btn__login" id="btn__login" type="submit" disabled>Loading...</button>
-                                            </div>
-                                        }
-
-                                        {
-                                            // Caso seja false, renderiza o botão habilitado com o texto 'Login'
-                                            this.state.isLoading === false &&
-                                            <div className="item">
-                                                <button
-                                                    className="btn btn__login" id="btn__login"
-                                                    type="submit"
-                                                    disabled={ this.state.email === '' || this.state.senha === '' ? 'none' : '' }
-                                                >
-                                                    Login
-                                                </button>
-                                            </div>
-                                        }
-
-                                        {/* <button type="submit">
-                                            Login
-                                        </button> */}
-                                    </form>
-                                </div>
+                                    }
+                                </form>
                             </div>
+                        </div>
                     </section>
                 </main>
             </div>
         )
     }
-}
+};
 
 export default Login;

@@ -13,14 +13,14 @@ function App() {
     <div>
       <header className="cabecalhoPrincipal">
         <div className="container">
-          <img src={logo} alt="logo da Gufi" />
+          <Link to="/"><img src={logo} alt="logo da Gufi" /></Link>
 
           <nav className="cabecalhoPrincipal-nav">
-            <Link to = "/">Home</Link>
-            <Link to = "/eventos">Eventos</Link>
+            <Link to="/">Home</Link>
+            <Link to="eventos">Eventos</Link>
             <a href="#conteudoPrincipal-contato">Contato</a>
-            <Link to = "login" className="cabecalhoPrincipal-nav-login" >Login</Link>
-            {/* <a href="/login" className="cabecalhoPrincipal-nav-login" >Login</a> */}
+            <Link className="cabecalhoPrincipal-nav-login" to="login" >Login</Link>
+            {/* <a className="cabecalhoPrincipal-nav-login" href="login">Login</a> */}
           </nav>
         </div>
       </header>

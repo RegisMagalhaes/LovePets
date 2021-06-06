@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import "../../assets/css/flexbox.css";
 import "../../assets/css/reset.css";
@@ -21,7 +22,7 @@ class TiposEventos extends Component{
 
     // Função responsável por fazer a requisição e trazer a lista de tipos eventos
     buscarTiposEventos = () => {
-        console.log('agora vamos fazer a chamada para API para atualizar a lista')
+        console.log('agora vamos fazer a chamada para API para atualizar a lista');
 
         // Faz a chamada para a API usando o fetch
         fetch('http://localhost:5000/api/tiposeventos', {
@@ -95,7 +96,8 @@ class TiposEventos extends Component{
 
                 // Define o cabeçalho da requisição
                 headers : {
-                    "Content-Type" : "application/json"
+                    "Content-Type" : "application/json",
+                    'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
                 }
             })
 
@@ -133,7 +135,8 @@ class TiposEventos extends Component{
 
                 // Define o cabeçalho da requisição
                 headers : {
-                    "Content-Type" : "application/json"
+                    "Content-Type" : "application/json",
+                    'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
                 }
             })
 
@@ -181,7 +184,12 @@ class TiposEventos extends Component{
         fetch('http://localhost:5000/api/tiposeventos/' + tipoEvento.idTipoEvento,
         {
             // Define o método da requisição ( DELETE )
-            method : 'DELETE'
+            method : 'DELETE',
+
+            // Define o cabeçalho da requisição
+            headers : {
+                'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
+            }
         })
 
         // Caso a requisição retorne um status code 204,
@@ -215,7 +223,7 @@ class TiposEventos extends Component{
             <div>
                 <header className="cabecalhoPrincipal">
                     <div className="container">
-                    <img src={logo} alt="Logo da Gufi" />
+                    <Link to="/"><img src={logo} alt="Logo da Gufi" /></Link>
 
                     <nav className="cabecalhoPrincipal-nav">
                         Administrador
@@ -225,8 +233,8 @@ class TiposEventos extends Component{
 
                 <main className="conteudoPrincipal">
                     <section className="conteudoPrincipal-cadastro">
-                        {/* <h2 className="conteudoPrincipal-cadastro-titulo">Tipos de Eventos</h2> */}
                         <Titulo tituloSeccao="Lista Tipos Eventos" />
+                        {/* <h2 className="conteudoPrincipal-cadastro-titulo">Tipos de Eventos</h2> */}
                         <div className="container" id="conteudoPrincipal-lista">
                             <table id="tabela-lista">
                             <thead>
@@ -261,8 +269,8 @@ class TiposEventos extends Component{
 
                     <section className="container" id="conteudoPrincipal-cadastro">
                         {/* Cadastro de Tipo de Evento */}
-                        {/* <h2 className="conteudoPrincipal-cadastro-titulo">Cadastro de Tipo de Evento</h2> */}
                         <Titulo tituloSeccao="Cadastro de Tipos Eventos" />
+                        {/* <h2 className="conteudoPrincipal-cadastro-titulo">Cadastro de Tipo de Evento</h2> */}
 
                         {/* Formulário de cadastro de Tipo de Evento */}
                         <form onSubmit={this.cadastrarTipoEvento}>
@@ -305,8 +313,8 @@ class TiposEventos extends Component{
                                 {
                                     this.state.idTipoEventoAlterado !== 0 &&
                                     <div>
-                                        <p>O tipo de evento {this.state.idTipoEventoAlterado} está sendo editado </p>
-                                        <p>Clique em Cancelar caso queira cancelar a operação antes de cadastrar um novo tipo de evento</p>
+                                        <p>O tipo de evento <strong>{this.state.idTipoEventoAlterado}</strong> está sendo editado </p>
+                                        <p>Pressione o botão Cancelar caso queira abortar a operação antes de cadastrar um novo tipo de evento</p>
                                     </div>
                                 }
 
