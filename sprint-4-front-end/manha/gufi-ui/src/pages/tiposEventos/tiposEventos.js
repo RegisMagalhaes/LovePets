@@ -50,7 +50,7 @@ class TiposEventos extends Component{
 
         // Outra forma, com tratamento de erro
         .then(resposta => {
-            // Caso a requisição retorne um status code 200,
+            // Caso a requisição não retorne um status code 200,
             if (resposta.status !== 200) {
                 throw Error();
             };
