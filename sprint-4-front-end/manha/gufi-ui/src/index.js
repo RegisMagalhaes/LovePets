@@ -7,6 +7,7 @@ import './index.css';
 
 import App from './pages/home/App';
 import TiposEventos from './pages/tiposEventos/tiposEventos';
+import Eventos from './pages/eventos/eventos';
 import Login from './pages/login/login';
 import NotFound from './pages/notFound/notFound';
 
@@ -46,6 +47,7 @@ const routing = (
         <Route exact path="/" component={App} /> {/* Home */}
         <Route path="/login" component={Login} /> {/* Login */}
         <PermissaoAdm path="/tiposeventos" component={TiposEventos} /> {/* Tipos Eventos */}
+        <Route path="/eventos" component={Eventos} /> {/* Eventos */}
         <Route exact path="/notfound" component={NotFound} /> {/* Not Found */}
         <Redirect to = "/notfound"/> {/* Redireciona para NotFound caso não encontre nenhuma rota */}
       </Switch>
