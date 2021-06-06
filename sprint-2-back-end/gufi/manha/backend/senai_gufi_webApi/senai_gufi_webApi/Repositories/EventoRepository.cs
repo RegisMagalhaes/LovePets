@@ -5,7 +5,6 @@ using senai_gufi_webApi.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace senai_gufi_webApi.Repositories
 {
@@ -132,6 +131,8 @@ namespace senai_gufi_webApi.Repositories
             return ctx.Eventos
                 // Adiciona na busca as informações do tipo de evento
                 .Include(e => e.IdTipoEventoNavigation)
+                // Adiciona na busca as informações da instituição
+                .Include(e => e.IdInstituicaoNavigation)
                 .ToList();
         }
     }
