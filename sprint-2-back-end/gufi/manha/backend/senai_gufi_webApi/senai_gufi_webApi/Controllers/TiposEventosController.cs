@@ -20,6 +20,9 @@ namespace senai_gufi_webApi.Controllers
 
     // Define que é um controlador de API
     [ApiController]
+
+    // Define que somente o administrador pode acessar os métodos
+    [Authorize(Roles = "1")]
     public class TiposEventosController : ControllerBase
     {
         /// <summary>
@@ -39,7 +42,6 @@ namespace senai_gufi_webApi.Controllers
         /// Lista todos os tipos de eventos
         /// </summary>
         /// <returns>Uma lista de tipos de eventos e um status code 200 - Ok</returns>
-        [Authorize(Roles = "1")]
         [HttpGet]
         public IActionResult Get()
         {

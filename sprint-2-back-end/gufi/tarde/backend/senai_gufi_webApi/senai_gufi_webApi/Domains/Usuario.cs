@@ -18,6 +18,9 @@ namespace senai_gufi_webApi.Domains
 
         public int IdUsuario { get; set; }
         public int? IdTipoUsuario { get; set; }
+
+        // Define que o campo é obrigatório
+        [Required(ErrorMessage = "Informe o nome do usuário")]
         public string NomeUsuario { get; set; }
 
         // Define que o campo é obrigatório

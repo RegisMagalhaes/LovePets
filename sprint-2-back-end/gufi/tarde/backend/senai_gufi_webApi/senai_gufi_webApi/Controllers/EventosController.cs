@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using senai_gufi_webApi.Domains;
 using senai_gufi_webApi.Interfaces;
 using senai_gufi_webApi.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace senai_gufi_webApi.Controllers
 {
@@ -23,6 +20,9 @@ namespace senai_gufi_webApi.Controllers
 
     // Define que é um controlador de API
     [ApiController]
+
+    // Define que qualquer usuário autenticado pode acessar aos métodos
+    [Authorize]
     public class EventosController : ControllerBase
     {
         /// <summary>
@@ -80,6 +80,8 @@ namespace senai_gufi_webApi.Controllers
         /// </summary>
         /// <param name="novoEvento">Objeto novoEvento que será cadastrado</param>
         /// <returns>Um status code 201 - Created</returns>
+        // Define que somente o administrador pode acessar o método
+        [Authorize(Roles = "1")]
         [HttpPost]
         public IActionResult Post(Evento novoEvento)
         {
@@ -103,6 +105,8 @@ namespace senai_gufi_webApi.Controllers
         /// <param name="id">ID do evento que será atualizado</param>
         /// <param name="eventoAtualizado">Objeto com as novas informações</param>
         /// <returns>Um status code 204 - No Content</returns>
+        // Define que somente o administrador pode acessar o método
+        [Authorize(Roles = "1")]
         [HttpPut("{id}")]
         public IActionResult Put(int id, Evento eventoAtualizado)
         {
@@ -125,6 +129,8 @@ namespace senai_gufi_webApi.Controllers
         /// </summary>
         /// <param name="id">ID do evento que será deletado</param>
         /// <returns>Um status code 204 - No Content</returns>
+        // Define que somente o administrador pode acessar o método
+        [Authorize(Roles = "1")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
