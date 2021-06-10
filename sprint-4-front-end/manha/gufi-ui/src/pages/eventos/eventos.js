@@ -174,7 +174,7 @@ export default class Eventos extends Component {
                                                 <td>{evento.idEvento}</td>
                                                 <td>{evento.nomeEvento}</td>
                                                 <td>{evento.descricao}</td>
-                                                <td>{evento.dataEvento}</td>
+                                                <td>{Intl.DateTimeFormat("pt-BR").format(new Date(evento.dataEvento))}</td>
                                                 <td>{evento.acessoLivre ? 'Público' : 'Privado' }</td>
                                                 <td>{evento.idTipoEventoNavigation.tituloTipoEvento}</td>
                                                 <td>{evento.idInstituicaoNavigation.nomeFantasia}</td>
