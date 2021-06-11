@@ -6,8 +6,10 @@ export default function TiposUsuarios(){
     // e define que o valor inicial deste state é um array vazio, através do useState ( [] )
     const [ listaTiposUsuarios, setListaTiposUsuarios ] = useState( [] );
     const [ titulo, setTitulo ] = useState( '' );
+    const [ isLoading, setIsLoading ] = useState( false );
 
     function buscarTiposUsuarios(){
+        setIsLoading( true );
         // Faz a chamada para a API usando axios
         axios('http://localhost:5000/api/tiposusuarios', {
             headers : {
@@ -19,7 +21,8 @@ export default function TiposUsuarios(){
         .then(resposta => {
             if (resposta.status === 200) {
                 // Chama a função que atualiza o state listaTiposUsuarios
-                setListaTiposUsuarios(resposta.data)
+                setListaTiposUsuarios(resposta.data);
+                setIsLoading( false );
             };
         })
 
@@ -35,6 +38,8 @@ export default function TiposUsuarios(){
     function cadastrarTipoUsuario(event){
         event.preventDefault();
 
+        setIsLoading( true );
+
         axios.post('http://localhost:5000/api/tiposusuarios', {
             tituloTipoUsuario : titulo
         }, {
@@ -47,6 +52,7 @@ export default function TiposUsuarios(){
             if (resposta.status === 201) {
                 console.log('Tipo de Usuário cadastrado!');
                 buscarTiposUsuarios();
+                setIsLoading( false );
             }
         })
 
@@ -98,7 +104,15 @@ export default function TiposUsuarios(){
                                 placeholder="Título do Tipo de Usuários"
                             />
 
-                            <button type="submit">Cadastrar</button>
+                            {
+                                isLoading === false &&
+                                <button type="submit">Cadastrar</button>
+                            }
+
+                            {
+                                isLoading === true &&
+                                <button type="submit" disabled>Carregando...</button>
+                            }
                         </div>
                     </form>
                 </section>
