@@ -110,22 +110,17 @@ const styles = StyleSheet.create({
   btnLogout: {
     alignItems: "center",
     justifyContent: "center",
-    height: 38,
+    height: 80,
     width: 240,
-    backgroundColor: "#FFFFFF",
-    borderColor: "#FFFFFF",
-    borderWidth: 1,
-    borderRadius: 4,
-    shadowOffset: { height: 1, width: 1 },
+    borderTopWidth: 1,
+    borderColor: "#ccc",
     marginBottom: 50
   },
   // texto do botão
   btnLogoutText: {
-    fontSize: 12,
-    fontFamily: "Open Sans Light",
-    color: "#B727FF",
-    letterSpacing: 6,
-    textTransform: 'uppercase'
+    fontSize: 16,
+    fontFamily: "Open Sans",
+    color: "#B727FF"
   }
 
 });
