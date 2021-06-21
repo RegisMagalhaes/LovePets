@@ -16,18 +16,24 @@ export default class Login extends Component{
     realizarLogin = async () => {
         console.warn(this.state.email + ' ' + this.state.senha);
 
-        const resposta = await api.post('/login', {
-            email : this.state.email,
-            senha : this.state.senha,
-        });
+        try {
+            
+            const resposta = await api.post('/login', {
+                email : this.state.email,
+                senha : this.state.senha,
+            });
+    
+            const token = resposta.data.token;
+            
+            console.warn(token);
+            
+            await AsyncStorage.setItem('userToken', token);
+            
+            this.props.navigation.navigate('Main');
 
-        const token = resposta.data.token;
-        
-        console.warn(token);
-        
-        await AsyncStorage.setItem('userToken', token);
-        
-        this.props.navigation.navigate('Main');
+        } catch (error) {
+            console.warn(error)
+        }
     };
 
     render(){

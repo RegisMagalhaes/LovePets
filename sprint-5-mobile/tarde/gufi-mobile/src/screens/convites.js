@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../services/api';
 
@@ -9,10 +10,17 @@ export default class Convites extends Component {
     this.state = {
       listaMeusEventos: []
     };
-  }
+  };
 
   buscarMeusEventos = async () => {
-    const resposta = await api.get("/eventos");
+    const valorToken = await AsyncStorage.getItem('userToken');
+
+    const resposta = await api.get('/presencas/minhas', {
+      headers : {
+        'Authorization' : 'Bearer ' + valorToken
+      }
+    });
+
     const dadosDaApi = resposta.data;
     this.setState({ listaMeusEventos : dadosDaApi });
   };
@@ -40,10 +48,18 @@ export default class Convites extends Component {
 
         {/* Corpo - Body - Section */}
         <View style={styles.mainBody}>
+          <TouchableOpacity
+            onPress={this.buscarMeusEventos}
+            style={{ alignItems : 'center' }}
+          >
+            <Text style={styles.flatItemTitle, { color : '#B727FF' }}>Atualizar Convites</Text>
+          </TouchableOpacity>
+
+
           <FlatList 
             contentContainerStyle={styles.mainBodyContent}
             data={ this.state.listaMeusEventos }
-            keyExtractor={ item => item.nomeEvento }
+            keyExtractor={ item => item.idEventoNavigation.nomeEvento }
             renderItem={this.renderItem}
           />
         </View>
@@ -56,14 +72,15 @@ export default class Convites extends Component {
 
     <View style={styles.flatItemRow}>
       <View style={styles.flatItemContainer}>
-        <Text style={styles.flatItemTitle}>{item.nomeEvento}</Text>
-        <Text style={styles.flatItemInfo}>{item.descricao}</Text>
-        <Text style={styles.flatItemInfo}>{item.dataEvento}</Text>
+        <Text style={styles.flatItemTitle}>{item.idEventoNavigation.nomeEvento}</Text>
+        <Text style={styles.flatItemInfo}>{item.idEventoNavigation.descricao}</Text>
+        <Text style={styles.flatItemInfo}>{Intl.DateTimeFormat('pt-BR').format(new Date(item.idEventoNavigation.dataEvento))}</Text>
+        <Text style={styles.flatItemInfo}>{item.situacao}</Text>
       </View>
 
       <View style={styles.flatItemImg}>
         <Image
-          source={require("../../assets/img/view.png")}
+          source={ item.situacao === 'confirmada' ? (require('../../assets/img/check-symbol.png')) : (require('../../assets/img/no-check-symbol.png')) }
           style={styles.flatItemImgIcon}
         />
       </View>
@@ -144,9 +161,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   flatItemImgIcon: {
-    width: 26,
-    height: 26,
-    tintColor: '#B727FF'
+    width: 16,
+    height: 16
   }
 
 });

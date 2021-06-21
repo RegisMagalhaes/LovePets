@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../services/api';
 
@@ -20,6 +21,25 @@ export default class Eventos extends Component{
   componentDidMount(){
     // realiza a chamada para a API trazendo todos os eventos
     this.buscarEventos();
+  };
+
+  inscrever = async (item) => {
+    console.warn(item);
+
+    try {
+      
+      const valorToken = await AsyncStorage.getItem('userToken');
+
+      await api.post('/presencas/inscricao/' + item.idEvento, {}, {
+        headers : {
+          'Authorization' : 'Bearer ' + valorToken
+        }
+      } )
+
+    } catch (error) {
+      console.warn(error)
+    }
+
   };
 
   render(){
@@ -59,15 +79,20 @@ export default class Eventos extends Component{
       <View style={styles.flatItemContainer}>
         <Text style={styles.flatItemTitle}>{item.nomeEvento}</Text>
         <Text style={styles.flatItemInfo}>{item.descricao}</Text>
-        <Text style={styles.flatItemInfo}>{item.dataEvento}</Text>
+        <Text style={styles.flatItemInfo}>{Intl.DateTimeFormat('pt-BR').format(new Date(item.dataEvento))}</Text>
       </View>
 
-      <View style={styles.flatItemImg}>
-        <Image
-          source={require('../../assets/img/view.png')}
-          style={styles.flatItemImgIcon}
-        />
-      </View>
+      <TouchableOpacity
+        onPress={() => this.inscrever(item)}
+        style={styles.flatItemImg}
+      >
+        <View>
+          <Image
+            source={require('../../assets/img/view.png')}
+            style={styles.flatItemImgIcon}
+          />
+        </View>
+      </TouchableOpacity>
     </View>
   )
 }

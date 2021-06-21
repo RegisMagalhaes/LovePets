@@ -1,7 +1,47 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import jwtDecode from 'jwt-decode';
 
 export default class Perfil extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      nome : '',
+      email : ''
+    }
+  };
+
+  buscarDadosStorage = async () => {
+    try {
+      
+      const valorToken = await AsyncStorage.getItem('userToken');
+      console.warn( jwtDecode(valorToken) )
+
+      if (valorToken !== null) {
+        this.setState({ nome : jwtDecode(valorToken).name });
+        this.setState({ email : jwtDecode(valorToken).email });
+      }
+
+    } catch (error) {
+      console.warn(error)
+    }
+  };
+
+  componentDidMount() {
+    this.buscarDadosStorage();
+  };
+
+  realizarLogout = async () => {
+    try {
+      
+      await AsyncStorage.removeItem('userToken');
+      this.props.navigation.navigate('Login');
+
+    } catch (error) {
+      console.warn(error)
+    }
+  };
 
   render(){
     return (
@@ -28,15 +68,15 @@ export default class Perfil extends Component {
             /> */}
             <View style={styles.mainBodyImg} />
 
-            <Text style={styles.mainBodyText}>Nome</Text>
-            <Text style={styles.mainBodyText}>E-mail</Text>
+            <Text style={styles.mainBodyText}>{this.state.nome}</Text>
+            <Text style={styles.mainBodyText}>{this.state.email}</Text>
           </View>
 
           <TouchableOpacity
             style={styles.btnLogout}
             onPress={this.realizarLogout}
           >
-              <Text style={styles.btnLogoutText}>Logout</Text>
+              <Text style={styles.btnLogoutText}>sair</Text>
           </TouchableOpacity>
         </View>
         
