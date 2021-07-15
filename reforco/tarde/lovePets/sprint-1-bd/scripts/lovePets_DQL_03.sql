@@ -3,10 +3,13 @@ GO
 
 SELECT * FROM clinica;
 SELECT * FROM veterinario;
+SELECT * FROM tipoUsuario;
+SELECT * FROM usuario;
 SELECT * FROM pet;
 SELECT * FROM raca;
 SELECT * FROM dono;
 SELECT * FROM tipoPet;
+SELECT * FROM situacao;
 SELECT * FROM atendimento;
 
 -- listar todos os veterinários (nome e CRMV) de uma clínica (razão social)
@@ -46,3 +49,13 @@ INNER JOIN dono
 ON dono.idDono = pet.idDono
 INNER JOIN clinica
 ON clinica.idClinica = veterinario.idClinica;
+
+SELECT * FROM atendimento
+WHERE idAtendimento = 2
+
+DELETE FROM atendimento
+WHERE idAtendimento = 1
+
+UPDATE atendimento
+SET idSituacao = 2
+WHERE idAtendimento = 2
