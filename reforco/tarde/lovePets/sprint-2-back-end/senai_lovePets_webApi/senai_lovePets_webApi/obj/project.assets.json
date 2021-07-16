@@ -9079,19 +9079,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\saulo.santos\\.nuget\\packages\\": {}
+    "C:\\Users\\fic\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\saulo.santos\\Downloads\\SENAI\\CT\\2021-1S-2D\\senai-dev-1s2021-alunos\\reforco\\tarde\\lovePets\\sprint-2-back-end\\senai_lovePets_webApi\\senai_lovePets_webApi\\senai_lovePets_webApi.csproj",
+      "projectUniqueName": "C:\\Users\\fic\\Desktop\\Regis\\2021-1S-2D\\reforco\\tarde\\lovePets\\sprint-2-back-end\\senai_lovePets_webApi\\senai_lovePets_webApi\\senai_lovePets_webApi.csproj",
       "projectName": "senai_lovePets_webApi",
-      "projectPath": "C:\\Users\\saulo.santos\\Downloads\\SENAI\\CT\\2021-1S-2D\\senai-dev-1s2021-alunos\\reforco\\tarde\\lovePets\\sprint-2-back-end\\senai_lovePets_webApi\\senai_lovePets_webApi\\senai_lovePets_webApi.csproj",
-      "packagesPath": "C:\\Users\\saulo.santos\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\saulo.santos\\Downloads\\SENAI\\CT\\2021-1S-2D\\senai-dev-1s2021-alunos\\reforco\\tarde\\lovePets\\sprint-2-back-end\\senai_lovePets_webApi\\senai_lovePets_webApi\\obj\\",
+      "projectPath": "C:\\Users\\fic\\Desktop\\Regis\\2021-1S-2D\\reforco\\tarde\\lovePets\\sprint-2-back-end\\senai_lovePets_webApi\\senai_lovePets_webApi\\senai_lovePets_webApi.csproj",
+      "packagesPath": "C:\\Users\\fic\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\fic\\Desktop\\Regis\\2021-1S-2D\\reforco\\tarde\\lovePets\\sprint-2-back-end\\senai_lovePets_webApi\\senai_lovePets_webApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\saulo.santos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\fic\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9170,7 +9170,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
