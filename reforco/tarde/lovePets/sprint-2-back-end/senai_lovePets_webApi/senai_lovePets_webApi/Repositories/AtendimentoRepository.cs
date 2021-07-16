@@ -101,6 +101,8 @@ namespace senai_lovePets_webApi.Repositories
         public void Deletar(int idAtendimento)
         {
             ctx.Atendimentos.Remove(BuscarPorId(idAtendimento));
+
+            ctx.SaveChanges();
         }
 
         /// <summary>
